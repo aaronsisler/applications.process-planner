@@ -7,8 +7,14 @@ public class ProcessDefinitionService {
     public Process createProcess() {
         Process process = new Process();
 
-        for(int i = 1; i < 5; i++){
-            Step tempStep = new Step(i);
+        for (int i = 1; i < 5; i++) {
+            Step tempStep;
+            if (i % 2 == 0) {
+                tempStep = new Step(i, 1);
+            } else {
+                tempStep = new Step(i);
+            }
+
             process.addStep(tempStep);
         }
 
