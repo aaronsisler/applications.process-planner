@@ -1,0 +1,17 @@
+package project.planner.services;
+
+import project.planner.models.Process;
+import project.planner.models.Step;
+
+public class ProcessDefinitionService {
+    public Process createProcess() {
+        Process process = new Process();
+
+        for(int i = 1; i < 5; i++){
+            Step tempStep = new Step(i);
+            process.addStep(tempStep);
+        }
+
+        return process;
+    }
+}
