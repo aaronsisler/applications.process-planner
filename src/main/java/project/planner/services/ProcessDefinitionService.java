@@ -4,8 +4,8 @@ import project.planner.models.Process;
 import project.planner.models.Step;
 
 public class ProcessDefinitionService {
-    public Process createProcess() {
-        Process process = new Process();
+    public Process createProcess(int staggerDays) {
+        Process process = new Process(staggerDays);
 
         for (int i = 1; i < 5; i++) {
             Step tempStep;

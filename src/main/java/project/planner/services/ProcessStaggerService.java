@@ -5,9 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ProcessDateService {
+public class ProcessStaggerService {
 
-    public ArrayList<LocalDate> createProcessDateList() {
+    public ArrayList<LocalDate> getProcessDateList() {
         ArrayList dateList = new ArrayList();
         for (int i = 1; i < 6; i++) {
             String string = String.format("0%d/01/2020", i);
@@ -17,5 +17,10 @@ public class ProcessDateService {
         }
 
         return dateList;
+    }
+
+    public int getProcessStaggerValue() {
+        int processStaggerInDays = 14;
+        return processStaggerInDays;
     }
 }
