@@ -1,18 +1,21 @@
 package process.planner.models;
 
+import java.util.ArrayList;
+
 public class Step {
-    private final int fullDays;
-    private final int halfDays;
+    private final ArrayList<HalfDay> halfDays;
     private int stepNumber;
 
-    public Step(int fullDays) {
-        this.fullDays = fullDays;
-        this.halfDays = 0;
+    public Step() {
+        halfDays = new ArrayList<>();
     }
 
-    public Step(int fullDays, int halfDays) {
-        this.fullDays = fullDays;
+    public Step(ArrayList<HalfDay> halfDays) {
         this.halfDays = halfDays;
+    }
+
+    public ArrayList<HalfDay> getHalfDays() {
+        return halfDays;
     }
 
     public int getStepNumber() {
@@ -23,12 +26,17 @@ public class Step {
         this.stepNumber = stepNumber;
     }
 
-    public int getFullDays() {
-        return fullDays;
+    public int getHalfDayCount() {
+        return this.halfDays.size();
     }
 
-    public int getHalfDays() {
-        return halfDays;
+    public void addHalfDay(HalfDay halfDay) {
+        this.halfDays.add(halfDay);
     }
 
+    public void addHalfDay(int numberOfEmployees) {
+        HalfDay halfDay = new HalfDay(numberOfEmployees);
+
+        this.halfDays.add(halfDay);
+    }
 }

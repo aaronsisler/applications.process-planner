@@ -1,9 +1,9 @@
 package process.planner.models;
 
-public class Day {
+public class HalfDay {
     private final int numberOfEmployees;
 
-    public Day(int numberOfEmployees) {
+    public HalfDay(int numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
     }
 

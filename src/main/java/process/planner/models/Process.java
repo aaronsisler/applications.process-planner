@@ -4,20 +4,10 @@ import java.util.ArrayList;
 
 public class Process {
     private final ArrayList<Step> steps;
-    private int processStaggerDays;
     private int processLength;
 
     public Process() {
         this.steps = new ArrayList<>();
-    }
-
-    public Process(int processStaggerDays) {
-        this.steps = new ArrayList<>();
-        this.processStaggerDays = processStaggerDays;
-    }
-
-    public int getProcessStaggerDays() {
-        return processStaggerDays;
     }
 
     public int getProcessLength() {
@@ -26,7 +16,7 @@ public class Process {
 
     public void addStep(Step step) {
         step.setStepNumber(this.getNextStepNumber());
-        this.processLength += step.getFullDays();
+        this.processLength += step.getHalfDayCount();
         this.steps.add(step);
     }
 

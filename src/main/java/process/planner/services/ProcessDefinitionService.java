@@ -4,20 +4,25 @@ import process.planner.models.Process;
 import process.planner.models.Step;
 
 public class ProcessDefinitionService {
-    public Process createProcess(int staggerDays) {
-        Process process = new Process(staggerDays);
+    public Process createProcess() {
+        Process process = new Process();
 
         for (int i = 1; i < 5; i++) {
-            Step tempStep;
-            if (i % 2 == 0) {
-                tempStep = new Step(i, 1);
-            } else {
-                tempStep = new Step(i);
-            }
+            Step tempStep = getStepData(i);
 
             process.addStep(tempStep);
         }
 
         return process;
+    }
+
+    private Step getStepData(int numberOfHalfDays) {
+        Step step = new Step();
+
+        for (int i = 1; i <= numberOfHalfDays; i++) {
+            step.addHalfDay(2);
+        }
+
+        return step;
     }
 }
