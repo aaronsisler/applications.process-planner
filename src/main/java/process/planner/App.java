@@ -1,9 +1,10 @@
-package project.planner;
+package process.planner;
 
-import project.planner.models.Process;
-import project.planner.services.ProcessDefinitionService;
-import project.planner.services.ProcessSchedulerService;
-import project.planner.services.ProcessStaggerService;
+import process.planner.models.Process;
+import process.planner.services.ExcelExportService;
+import process.planner.services.ProcessDefinitionService;
+import process.planner.services.ProcessSchedulerService;
+import process.planner.services.ProcessStaggerService;
 
 public class App {
     public static void main(String[] args) {
@@ -39,5 +40,6 @@ public class App {
         }
 
         // Service to take Array and make an Excel sheet
+        ExcelExportService.exportExcelFile(processMapping);
     }
 }

@@ -1,4 +1,4 @@
-package project.planner.models;
+package process.planner.models;
 
 public class Step {
     private final int fullDays;

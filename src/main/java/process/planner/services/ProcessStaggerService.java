@@ -1,4 +1,4 @@
-package project.planner.services;
+package process.planner.services;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

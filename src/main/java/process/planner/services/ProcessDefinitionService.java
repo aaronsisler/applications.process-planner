@@ -1,7 +1,7 @@
-package project.planner.services;
+package process.planner.services;
 
-import project.planner.models.Process;
-import project.planner.models.Step;
+import process.planner.models.Process;
+import process.planner.models.Step;
 
 public class ProcessDefinitionService {
     public Process createProcess(int staggerDays) {

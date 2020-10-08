@@ -24,6 +24,8 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
 
+    compile 'org.apache.poi:poi:3.9'
+
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 
@@ -33,7 +35,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'project.planner.App'
+    mainClassName = 'process.planner.App'
 }
 
 test {

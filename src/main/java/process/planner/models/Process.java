@@ -1,4 +1,4 @@
-package project.planner.models;
+package process.planner.models;
 
 import java.util.ArrayList;
 
