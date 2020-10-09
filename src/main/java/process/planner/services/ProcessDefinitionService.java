@@ -21,26 +21,4 @@ public class ProcessDefinitionService {
 
         return process;
     }
-
-    public Process createProcessOld() {
-        Process process = new Process();
-
-        for (int i = 1; i < 5; i++) {
-            Step tempStep = getStepData(i);
-
-            process.addStep(tempStep);
-        }
-
-        return process;
-    }
-
-    private Step getStepData(int numberOfHalfDays) {
-        Step step = new Step();
-
-        for (int i = 1; i <= numberOfHalfDays; i++) {
-            step.addHalfDay(2);
-        }
-
-        return step;
-    }
 }

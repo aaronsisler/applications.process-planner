@@ -14,20 +14,24 @@ public class ExcelExportService {
 
         // Creating Sheets using sheet object
         Sheet sheet1 = wb.createSheet("Schedule");
-        Row row = sheet1.createRow(0);
-        row.createCell(0).setCellValue("Taco");
-        row.createCell(1).setCellValue("Bell");
+        int rowCounter = 0;
+        for (int[] row : processMapping) {
+            Row tempRow = sheet1.createRow(rowCounter);
+
+            int columnCounter = 0;
+            for (int columnValue : row) {
+                tempRow.createCell(columnCounter).setCellValue(columnValue);
+                columnCounter++;
+            }
+            rowCounter++;
+        }
         createExcelFile(wb);
-    }
-
-    private static void main(Workbook wb) {
-
     }
 
     private static void createExcelFile(Workbook wb) {
         try {
             // An output stream accepts output bytes and sends them to sink.
-            OutputStream fileOut = new FileOutputStream("Geeks.xlsx");
+            OutputStream fileOut = new FileOutputStream("Schedule.xlsx");
             wb.write(fileOut);
             System.out.println("Sheets Has been Created successfully");
         } catch (Exception e) {

@@ -7,12 +7,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ProcessDatesService {
+public class DatesService {
 
-    public ArrayList<LocalDate> getProcessDateList() {
+    public static ArrayList<LocalDate> getProcessDateList() {
         ArrayList<LocalDate> dateList = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-        int staggerValue = 7;
 
         ArrayList<String> rawDateList = new DateReaderFromFile().getDates("process-one-dates.txt");
 
@@ -22,15 +21,13 @@ public class ProcessDatesService {
             dateList.add(date);
         }
 
-//        for (int i = 1; i <= 3; i++) {
-//            String paddedValue = String.format("0%d", i * staggerValue);
-//            String trimmedValue = paddedValue.substring(paddedValue.length() - 2);
-//            String rawStringDate = String.format("01/%s/2020", trimmedValue);
-//            LocalDate date = LocalDate.parse(rawStringDate, formatter);
-//
-//            dateList.add(date);
-//        }
-
         return dateList;
+    }
+
+    public static long getStartDateEpochDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
+        LocalDate date = LocalDate.parse("01/01/2020", formatter);
+
+        return date.toEpochDay();
     }
 }
