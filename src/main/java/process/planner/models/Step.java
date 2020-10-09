@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Step {
     private final ArrayList<HalfDay> halfDays;
     private int stepNumber;
+    private int previousStepHalfDays = 1;
 
     public Step() {
         halfDays = new ArrayList<>();
@@ -12,6 +13,14 @@ public class Step {
 
     public Step(ArrayList<HalfDay> halfDays) {
         this.halfDays = halfDays;
+    }
+
+    public int getPreviousStepHalfDays() {
+        return previousStepHalfDays;
+    }
+
+    public void setPreviousStepHalfDays(int previousStepHalfDays) {
+        this.previousStepHalfDays = previousStepHalfDays;
     }
 
     public ArrayList<HalfDay> getHalfDays() {

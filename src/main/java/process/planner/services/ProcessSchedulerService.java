@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class ProcessSchedulerService {
-    private final int NUMBER_OF_CALENDAR_DAYS = 31;
+    private final int NUMBER_OF_CALENDAR_DAYS = 45;
 
     public int[][] createProcessMapping(Process process, ArrayList<LocalDate> dateList) {
         int numberOfSteps = process.getStepCount();
@@ -20,14 +20,18 @@ public class ProcessSchedulerService {
 
         for (LocalDate localDate : dateList) {
             long tempDate = localDate.toEpochDay();
-            int dateStagger = (int)(tempDate - beginDateInDays);
+            int dateStagger = (int) (tempDate - beginDateInDays);
 
-            int dayCounter = 0;
+            int previousStepDayCount = 0;
             for (Step step : process.getSteps()) {
-                StringBuilder sb = new StringBuilder();
+                if (step.getStepNumber() != 1) {
+                    previousStepDayCount += step.getPreviousStepHalfDays() - 1;
+                }
+
                 for (HalfDay halfDay : step.getHalfDays()) {
-                    processMap[step.getStepNumber() - 1][dateStagger + dayCounter] = halfDay.getNumberOfEmployees();
-                    dayCounter++;
+                    int dayIndex = step.getHalfDays().indexOf(halfDay);
+                    int nValue = dateStagger + previousStepDayCount + dayIndex;
+                    processMap[step.getStepNumber() - 1][nValue] = halfDay.getNumberOfEmployees();
                 }
             }
         }

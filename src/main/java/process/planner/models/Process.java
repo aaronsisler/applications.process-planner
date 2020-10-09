@@ -17,6 +17,10 @@ public class Process {
     public void addStep(Step step) {
         step.setStepNumber(this.getNextStepNumber());
         this.processLength += step.getHalfDayCount();
+        if (this.steps.size() > 0) {
+            int halfDayCount = this.steps.get(this.steps.size() - 1).getHalfDayCount();
+            step.setPreviousStepHalfDays(halfDayCount);
+        }
         this.steps.add(step);
     }
 
