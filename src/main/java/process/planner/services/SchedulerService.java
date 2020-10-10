@@ -3,18 +3,16 @@ package process.planner.services;
 import process.planner.models.HalfDay;
 import process.planner.models.Process;
 import process.planner.models.Step;
-import process.planner.utils.DaysOfTheMonth;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ProcessSchedulerService {
-    private int NUMBER_OF_CALENDAR_DAYS = DaysOfTheMonth.getDaysInMonth("01", 2020);
+public class SchedulerService {
+    private int NUMBER_OF_CALENDAR_DAYS = DatesService.getNumberOfDaysInYear(2021);
     private int NUMBER_OF_CALENDAR_HALF_DAYS = NUMBER_OF_CALENDAR_DAYS * 2;
 
     public int[][] createProcessMapping(Process process, ArrayList<LocalDate> dateList) {
         int numberOfSteps = process.getStepCount();
-        NUMBER_OF_CALENDAR_DAYS = DaysOfTheMonth.getDaysInMonth("01", 2020);
         int[][] processMap = new int[numberOfSteps][NUMBER_OF_CALENDAR_HALF_DAYS];
 
         long beginDateInDays = DatesService.getStartDateEpochDate();

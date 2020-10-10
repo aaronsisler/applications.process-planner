@@ -4,7 +4,7 @@ import process.planner.models.Process;
 import process.planner.services.ExcelExportService;
 import process.planner.services.DatesService;
 import process.planner.services.ProcessDefinitionService;
-import process.planner.services.ProcessSchedulerService;
+import process.planner.services.SchedulerService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class App {
             ArrayList<LocalDate> processDateList = DatesService.getProcessDateList();
 
             // Service to read Process and place into an Array
-            int[][] processMapping = new ProcessSchedulerService().createProcessMapping(process, processDateList);
+            int[][] processMapping = new SchedulerService().createProcessMapping(process, processDateList);
             for (int i = 0; i < processMapping.length; i++) {
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < processMapping[i].length; j++) {
@@ -33,6 +33,7 @@ public class App {
             // Service to take Array and make an Excel sheet
             ExcelExportService.exportExcelFile(processMapping);
         } catch (Exception e) {
+            System.out.println("We broke");
             System.out.println(e.getMessage());
         }
 

@@ -1,22 +1,23 @@
 package process.planner.services;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class ExcelExportService {
     public static void exportExcelFile(int[][] processMapping) {
-        Workbook wb = new HSSFWorkbook();
+        XSSFWorkbook wb = new XSSFWorkbook();
 
         // Creating Sheets using sheet object
-        Sheet sheet1 = wb.createSheet("Schedule");
-        int rowCounter = 0;
+        XSSFSheet sheet = wb.createSheet("Schedule");
+        createMonthsRow(sheet);
+        int rowCounter = 2;
         for (int[] row : processMapping) {
-            Row tempRow = sheet1.createRow(rowCounter);
+            XSSFRow tempRow = sheet.createRow(rowCounter);
 
             int columnCounter = 0;
             for (int columnValue : row) {
@@ -26,6 +27,29 @@ public class ExcelExportService {
             rowCounter++;
         }
         createExcelFile(wb);
+    }
+
+    private static void createMonthsRow(XSSFSheet sheet) {
+        XSSFRow monthRow = sheet.createRow(0);
+        XSSFRow dayRow = sheet.createRow(1);
+        int[] daysInMonths = DatesService.getDaysInEachMonth(2021);
+        int monthCounter = 1;
+        int columnCounter = 0;
+        for (int daysInMonth : daysInMonths) {
+            int dayCounter = 1;
+            for (int i = 0; i < daysInMonth * 2; i++) {
+                monthRow.createCell(columnCounter).setCellValue(monthCounter);
+                dayRow.createCell(columnCounter).setCellValue(dayCounter);
+                if(i % 2 == 1) {
+                    dayCounter++;
+                }
+                columnCounter++;
+            }
+            monthCounter++;
+        }
+    }
+
+    private static void createDaysRow() {
     }
 
     private static void createExcelFile(Workbook wb) {
