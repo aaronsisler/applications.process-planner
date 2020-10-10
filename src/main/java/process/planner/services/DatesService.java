@@ -59,4 +59,14 @@ public class DatesService {
 
         return daysInMonths;
     }
+
+    public static String getMonthName(int rawMonth) {
+        String month = rawMonth >= 10 ? Integer.toString(rawMonth) : String.format("0%d", rawMonth);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
+        String rawDate = String.format("%s/01/%d", month, 1970);
+        LocalDate date = LocalDate.parse(rawDate, formatter);
+
+        return date.getMonth().toString();
+    }
 }

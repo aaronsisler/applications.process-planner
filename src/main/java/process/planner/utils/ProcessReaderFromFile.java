@@ -29,7 +29,8 @@ public class ProcessReaderFromFile {
             File file = new File(filePath);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                String rawStep = scanner.nextLine();
+                String rawData = scanner.nextLine();
+                String rawStep = rawData.split("#")[0].trim();
                 rawStepDefinitionList.add(rawStep);
             }
             scanner.close();
