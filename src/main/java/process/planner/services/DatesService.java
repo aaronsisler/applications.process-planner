@@ -13,7 +13,7 @@ public class DatesService {
         ArrayList<LocalDate> dateList = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
 
-        ArrayList<String> rawDateList = new DateReaderFromFile().getDates("process-one-dates.txt");
+        ArrayList<String> rawDateList = new DateReaderFromFile().getDates("process-dates-one.txt");
 
         for (String rawDate : rawDateList) {
             LocalDate date = LocalDate.parse(rawDate, formatter);
