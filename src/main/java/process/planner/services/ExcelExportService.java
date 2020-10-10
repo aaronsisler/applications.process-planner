@@ -19,9 +19,9 @@ public class ExcelExportService {
         // Creating Sheets using sheet object
         XSSFSheet sheet = wb.createSheet("Schedule");
         createHeaderRows(sheet);
-        int rowCounter = 2;
+        int rowCounterPostHeaders = 2;
         for (int[] row : processMapping) {
-            XSSFRow tempRow = sheet.createRow(rowCounter);
+            XSSFRow tempRow = sheet.createRow(rowCounterPostHeaders);
 
             int columnCounter = 0;
             for (int columnValue : row) {
@@ -29,7 +29,7 @@ public class ExcelExportService {
                 tempRow.createCell(columnCounter).setCellValue(cellValue);
                 columnCounter++;
             }
-            rowCounter++;
+            rowCounterPostHeaders++;
         }
         for (int i = 0; i < processMapping[0].length; i++) {
             sheet.autoSizeColumn(i);
