@@ -57,7 +57,9 @@ public class App {
             int[] employeeCountsPerDay = new int[suitesScheduleLength];
             for (int i = 0; i < suitesSchedule.length; i++) {
                 for (int j = 0; j < suitesSchedule[0].length; j++) {
-                    employeeCountsPerDay[j] += suitesSchedule[i][j];
+                    if (suitesSchedule[i][j] > 0) {
+                        employeeCountsPerDay[j] += suitesSchedule[i][j];
+                    }
                 }
             }
 

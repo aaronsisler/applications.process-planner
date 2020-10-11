@@ -24,13 +24,25 @@ public class SchedulerService {
         int previousSuiteStepCount = 0;
         for (Suite suite : suiteList) {
             processMap = this.createProcessMapping(processMap, suite, previousSuiteStepCount);
-            previousSuiteStepCount += suite.getProcess().getStepCount() + 1;
+            if (numberOfSteps > previousSuiteStepCount + 1) {
+                previousSuiteStepCount += suite.getProcess().getStepCount();
+                processMap = this.addBlankRow(processMap, previousSuiteStepCount);
+                previousSuiteStepCount += 1;
+            }
         }
 
         return processMap;
     }
 
-    public int[][] createProcessMapping(int[][] processMap, Suite suite, int previousSuiteStepCount) {
+    private int[][] addBlankRow(int[][] processMap, int previousSuiteStepCount) {
+        for (int j = 0; j < processMap[0].length; j++) {
+            processMap[previousSuiteStepCount][j] = -1;
+        }
+
+        return processMap;
+    }
+
+    private int[][] createProcessMapping(int[][] processMap, Suite suite, int previousSuiteStepCount) {
         long beginDateInDays = DatesService.getStartDateEpochDate();
 
         for (LocalDate localDate : suite.getProcessDates()) {

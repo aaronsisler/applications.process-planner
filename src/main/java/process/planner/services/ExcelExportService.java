@@ -1,8 +1,6 @@
 package process.planner.services;
 
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -21,23 +19,43 @@ public class ExcelExportService {
         createHeaderRows(sheet);
         int rowCounterPostHeaders = 2;
         for (int[] row : processMapping) {
-            XSSFRow tempRow = sheet.createRow(rowCounterPostHeaders);
-
-            int columnCounter = 0;
-            for (int columnValue : row) {
-                String cellValue = columnValue == 0 ? "" : Integer.toString(columnValue);
-                tempRow.createCell(columnCounter).setCellValue(cellValue);
-                columnCounter++;
+            if (row[0] == -1) {
+                createSeparatorRow(sheet, row.length, rowCounterPostHeaders);
+            } else {
+                createValueRow(sheet, row, rowCounterPostHeaders);
             }
+
             rowCounterPostHeaders++;
         }
 
+        createSeparatorRow(sheet, employeeCountsPerDay.length, rowCounterPostHeaders);
         createEmployeeCountFooter(sheet, employeeCountsPerDay, rowCounterPostHeaders + 1);
 
         for (int i = 0; i < processMapping[0].length; i++) {
             sheet.autoSizeColumn(i);
         }
         createExcelFile(wb);
+    }
+
+    private static void createValueRow(XSSFSheet sheet, int[] rowData, int rowPosition) {
+        XSSFRow tempRow = sheet.createRow(rowPosition);
+
+        for (int i = 0; i < rowData.length; i++) {
+            String cellValue = rowData[i] == 0 ? "" : Integer.toString(rowData[i]);
+            tempRow.createCell(i).setCellValue(cellValue);
+        }
+    }
+
+    private static void createSeparatorRow(XSSFSheet sheet, int columnCount, int rowPosition) {
+        XSSFRow blankRow = sheet.createRow(rowPosition);
+        CellStyle blankRowCellStyle = blankRow.getSheet().getWorkbook().createCellStyle();
+        blankRowCellStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.index);
+        blankRowCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        for (int i = 0; i < columnCount; i++) {
+            XSSFCell tempDayCell = blankRow.createCell(i);
+            tempDayCell.setCellValue("");
+            tempDayCell.setCellStyle(blankRowCellStyle);
+        }
     }
 
     private static void createEmployeeCountFooter(XSSFSheet sheet, int[] employeeCountsPerDay, int rowPosition) {
