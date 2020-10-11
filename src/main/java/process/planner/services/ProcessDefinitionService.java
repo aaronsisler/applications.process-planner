@@ -7,8 +7,8 @@ import process.planner.utils.ProcessReaderFromFile;
 import java.util.ArrayList;
 
 public class ProcessDefinitionService {
-    public Process createProcess() {
-        ArrayList<int[]> stepDefinition = new ProcessReaderFromFile().getProcessDefinition();
+    public Process retrieveProcess(String filepath) {
+        ArrayList<int[]> stepDefinition = new ProcessReaderFromFile().getProcessDefinition(filepath);
         Process process = new Process();
 
         for (int[] dayDef : stepDefinition) {

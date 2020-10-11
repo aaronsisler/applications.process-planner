@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ProcessReaderFromFile {
-    public ArrayList<int[]> getProcessDefinition() {
+    public ArrayList<int[]> getProcessDefinition(String filepath) {
         ArrayList<int[]> stepDefinitionList = new ArrayList<>();
-        ArrayList<String> rawStepDefinitionList = getRawStepDefinitions("process-definition-one.txt");
+        ArrayList<String> rawStepDefinitionList = getRawStepDefinitions(filepath);
 
         for(String rawStepDef : rawStepDefinitionList) {
             String[] rawEmployeeCountsPerHalfDay = rawStepDef.split(",");

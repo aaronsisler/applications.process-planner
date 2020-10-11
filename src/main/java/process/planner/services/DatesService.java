@@ -9,11 +9,11 @@ import java.util.Locale;
 
 public class DatesService {
 
-    public static ArrayList<LocalDate> getProcessDateList() {
+    public static ArrayList<LocalDate> getProcessDateList(String filepath) {
         ArrayList<LocalDate> dateList = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
 
-        ArrayList<String> rawDateList = new DateReaderFromFile().getDates("process-dates-one.txt");
+        ArrayList<String> rawDateList = new DateReaderFromFile().getDates(filepath);
 
         for (String rawDate : rawDateList) {
             LocalDate date = LocalDate.parse(rawDate, formatter);

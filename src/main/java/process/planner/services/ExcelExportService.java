@@ -13,7 +13,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class ExcelExportService {
-    public static void exportExcelFile(int[][] processMapping) {
+    public static void exportExcelFile(int[][] processMapping, int[] employeeCountsPerDay) {
         XSSFWorkbook wb = new XSSFWorkbook();
 
         // Creating Sheets using sheet object
@@ -31,10 +31,23 @@ public class ExcelExportService {
             }
             rowCounterPostHeaders++;
         }
+
+        createEmployeeCountFooter(sheet, employeeCountsPerDay, rowCounterPostHeaders + 1);
+
         for (int i = 0; i < processMapping[0].length; i++) {
             sheet.autoSizeColumn(i);
         }
         createExcelFile(wb);
+    }
+
+    private static void createEmployeeCountFooter(XSSFSheet sheet, int[] employeeCountsPerDay, int rowPosition) {
+        int columnCounter = 0;
+        XSSFRow tempRow = sheet.createRow(rowPosition);
+        for (int employeeCount : employeeCountsPerDay) {
+            String cellValue = employeeCount == 0 ? "" : Integer.toString(employeeCount);
+            tempRow.createCell(columnCounter).setCellValue(cellValue);
+            columnCounter++;
+        }
     }
 
     private static void createHeaderRows(XSSFSheet sheet) {
