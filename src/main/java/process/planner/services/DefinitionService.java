@@ -6,7 +6,7 @@ import process.planner.utils.DefinitionReaderFromFile;
 
 import java.util.ArrayList;
 
-public class ProcessDefinitionService {
+public class DefinitionService {
     public Process retrieveProcess(String filepath) {
         ArrayList<int[]> stepDefinition = new DefinitionReaderFromFile().getProcessDefinition(filepath);
         Process process = new Process();

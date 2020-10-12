@@ -3,9 +3,7 @@ package process.planner;
 import process.planner.models.Process;
 import process.planner.models.Suite;
 import process.planner.services.DatesService;
-import process.planner.services.ExcelExportService;
-import process.planner.services.ProcessDefinitionService;
-import process.planner.services.SchedulerService;
+import process.planner.services.DefinitionService;
 import process.planner.utils.FolderReader;
 
 import java.time.LocalDate;
@@ -24,7 +22,7 @@ public class App {
             // Service that reads input of processes
             ArrayList<Suite> suiteList = new ArrayList<>();
             for (String filepath : filepathProcessDefinitionList) {
-                Process tempProcess = new ProcessDefinitionService().retrieveProcess(filepath);
+                Process tempProcess = new DefinitionService().retrieveProcess(filepath);
                 Suite tempSuite = new Suite();
                 tempSuite.setProcess(tempProcess);
                 suiteList.add(tempSuite);
@@ -38,25 +36,31 @@ public class App {
             }
 
             // Service to read Process and place into an Array
-            int[][] suitesSchedule = new SchedulerService().createSuitesSchedule(suiteList);
+//            int[][] suitesSchedule = new SchedulerService().createSuitesSchedule(suiteList);
 //            App.printOutProcessMapping(suitesSchedule);
 
-            int suitesScheduleLength = suitesSchedule[0].length;
-            int[] employeeCountsPerDay = new int[suitesScheduleLength];
-            for (int[] row : suitesSchedule) {
-                for (int j = 0; j < suitesSchedule[0].length; j++) {
-                    if (row[j] > 0) {
-                        employeeCountsPerDay[j] += row[j];
-                    }
-                }
-            }
+//            int[] employeeCountsPerDay = processEmployeeCounts(suitesSchedule);
 
             // Service to take Array and make an Excel sheet
-            ExcelExportService.exportExcelFile(suitesSchedule, employeeCountsPerDay);
+//            ExcelExportService.exportExcelFile(suitesSchedule, employeeCountsPerDay);
         } catch (Exception e) {
             System.out.println("We broke");
             System.out.println(e.getMessage());
         }
+    }
+
+    private static int[] processEmployeeCounts(int[][] suitesSchedule) {
+        int suitesScheduleLength = suitesSchedule[0].length;
+        int[] employeeCountsPerDay = new int[suitesScheduleLength];
+        for (int[] row : suitesSchedule) {
+            for (int j = 0; j < suitesSchedule[0].length; j++) {
+                if (row[j] > 0) {
+                    employeeCountsPerDay[j] += row[j];
+                }
+            }
+        }
+
+        return employeeCountsPerDay;
     }
 
     private static void printOutProcessMapping(int[][] suitesSchedule) {

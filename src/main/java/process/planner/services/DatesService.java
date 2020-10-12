@@ -5,13 +5,14 @@ import process.planner.utils.DateReaderFromFile;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 public class DatesService {
 
     public static ArrayList<LocalDate> getProcessDateList(String filepath) {
         ArrayList<LocalDate> dateList = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
 
         ArrayList<String> rawDateList = new DateReaderFromFile().getDates(filepath);
 
@@ -21,20 +22,29 @@ public class DatesService {
             dateList.add(date);
         }
 
+        for (LocalDate date: dateList ) {
+            System.out.println(date.toString());
+        }
+
+        Collections.sort(dateList);
+        for (LocalDate date: dateList ) {
+            System.out.println(date.toString());
+        }
+
         return dateList;
     }
 
     public static long getStartDateEpochDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-        LocalDate date = LocalDate.parse("01/01/2021", formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
+        LocalDate date = LocalDate.parse("2021/01/01", formatter);
 
         return date.toEpochDay();
     }
 
     public static int getNumberOfDaysInYear(int year) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-        String beginningOfYear = String.format("01/01/%d", year);
-        String endOfYear = String.format("12/31/%d", year);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
+        String beginningOfYear = String.format("%d/01/01", year);
+        String endOfYear = String.format("%d/12/31", year);
         LocalDate begindate = LocalDate.parse(beginningOfYear, formatter);
         LocalDate enddate = LocalDate.parse(endOfYear, formatter);
 
@@ -44,8 +54,8 @@ public class DatesService {
     public static int getDaysInMonth(String rawMonth, int year) {
         String month = rawMonth.length() == 1 ? String.format("0%s", rawMonth) : rawMonth;
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-        String rawDate = String.format("%s/01/%d", month, year);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
+        String rawDate = String.format("%d/%s/01", month, year);
         LocalDate date = LocalDate.parse(rawDate, formatter);
 
         return date.lengthOfMonth();
@@ -63,8 +73,8 @@ public class DatesService {
     public static String getMonthName(int rawMonth) {
         String month = rawMonth >= 10 ? Integer.toString(rawMonth) : String.format("0%d", rawMonth);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-        String rawDate = String.format("%s/01/%d", month, 1970);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
+        String rawDate = String.format("%d/%s/01", month, 1970);
         LocalDate date = LocalDate.parse(rawDate, formatter);
 
         return date.getMonth().toString();
