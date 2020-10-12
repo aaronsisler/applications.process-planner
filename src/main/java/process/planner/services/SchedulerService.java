@@ -20,15 +20,17 @@ public class SchedulerService {
             }
         }
 
+
         int[][] processMap = new int[numberOfSteps][NUMBER_OF_CALENDAR_HALF_DAYS];
         int previousSuiteStepCount = 0;
         for (Suite suite : suiteList) {
             processMap = this.createProcessMapping(processMap, suite, previousSuiteStepCount);
-            if (numberOfSteps > previousSuiteStepCount + 1) {
-                previousSuiteStepCount += suite.getProcess().getStepCount();
-                processMap = this.addBlankRow(processMap, previousSuiteStepCount);
-                previousSuiteStepCount += 1;
+            previousSuiteStepCount += suite.getProcess().getStepCount();
+            if (numberOfSteps <= previousSuiteStepCount) {
+                break;
             }
+            processMap = this.addBlankRow(processMap, previousSuiteStepCount);
+            previousSuiteStepCount++;
         }
 
         return processMap;

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ProcessReaderFromFile {
+public class DefinitionReaderFromFile {
     public ArrayList<int[]> getProcessDefinition(String filepath) {
         ArrayList<int[]> stepDefinitionList = new ArrayList<>();
         ArrayList<String> rawStepDefinitionList = getRawStepDefinitions(filepath);
@@ -24,9 +24,7 @@ public class ProcessReaderFromFile {
     private ArrayList<String> getRawStepDefinitions(String filePathname) {
         ArrayList<String> rawStepDefinitionList = new ArrayList<>();
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            String filePath = classLoader.getResource(filePathname).getPath();
-            File file = new File(filePath);
+            File file = new File(filePathname);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String rawData = scanner.nextLine();
@@ -38,6 +36,7 @@ public class ProcessReaderFromFile {
             System.out.println("File not found: " + filePathname);
             e.printStackTrace();
         }
+
         return rawStepDefinitionList;
     }
 }

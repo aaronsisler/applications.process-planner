@@ -9,9 +9,7 @@ public class DateReaderFromFile {
     public ArrayList<String> getDates(String filePathname) {
         ArrayList<String> dateList = new ArrayList<>();
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            String filePath = classLoader.getResource(filePathname).getPath();
-            File file = new File(filePath);
+            File file = new File(filePathname);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String rawDate = scanner.nextLine();
