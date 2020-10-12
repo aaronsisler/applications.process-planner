@@ -39,7 +39,7 @@ public class App {
 
             // Service to read Process and place into an Array
             int[][] suitesSchedule = new SchedulerService().createSuitesSchedule(suiteList);
-            App.printOutProcessMapping(suitesSchedule);
+//            App.printOutProcessMapping(suitesSchedule);
 
             int suitesScheduleLength = suitesSchedule[0].length;
             int[] employeeCountsPerDay = new int[suitesScheduleLength];
