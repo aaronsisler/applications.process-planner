@@ -5,15 +5,20 @@ import process.planner.models.Step;
 import process.planner.utils.DefinitionReaderFromFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DefinitionService {
     public Process retrieveProcess(String filepath) {
-        ArrayList<int[]> stepDefinition = new DefinitionReaderFromFile().getProcessDefinition(filepath);
+        ArrayList<String> rawStepDefinitions = new DefinitionReaderFromFile().getRawStepDefinitions(filepath);
         Process process = new Process();
 
-        for (int[] dayDef : stepDefinition) {
+        for (String rawStep : rawStepDefinitions) {
+            String[] rawStepSections = rawStep.split("~");
+            int stepStagger = Integer.parseInt(rawStepSections[0]);
+            int[] halfDayCounts = Arrays.stream(rawStepSections[1].split(",")).mapToInt(Integer::parseInt).toArray();
             Step tempStep = new Step();
-            for (int employeeCount : dayDef) {
+            tempStep.setStaggerFromStart(stepStagger);
+            for (int employeeCount : halfDayCounts) {
                 tempStep.addHalfDay(employeeCount);
             }
             process.addStep(tempStep);

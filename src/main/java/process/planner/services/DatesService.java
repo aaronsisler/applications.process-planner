@@ -17,19 +17,17 @@ public class DatesService {
         ArrayList<String> rawDateList = new DateReaderFromFile().getDates(filepath);
 
         for (String rawDate : rawDateList) {
-            LocalDate date = LocalDate.parse(rawDate, formatter);
-
-            dateList.add(date);
-        }
-
-        for (LocalDate date: dateList ) {
-            System.out.println(date.toString());
+            try {
+                LocalDate date = LocalDate.parse(rawDate, formatter);
+                dateList.add(date);
+            } catch (Exception e) {
+                System.out.println(String.format("File contains invalid date: %s", filepath));
+                System.out.println(String.format("Invalid Date: %s", rawDate));
+                throw e;
+            }
         }
 
         Collections.sort(dateList);
-        for (LocalDate date: dateList ) {
-            System.out.println(date.toString());
-        }
 
         return dateList;
     }

@@ -6,25 +6,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DefinitionReaderFromFile {
-    public ArrayList<int[]> getProcessDefinition(String filepath) {
-        ArrayList<int[]> stepDefinitionList = new ArrayList<>();
-        ArrayList<String> rawStepDefinitionList = getRawStepDefinitions(filepath);
-
-        for(String rawStepDef : rawStepDefinitionList) {
-            String[] rawEmployeeCountsPerHalfDay = rawStepDef.split(",");
-            int[] parsedEmployeeCountsPerHalfDay = new int[rawEmployeeCountsPerHalfDay.length];
-            for(int i = 0; i < rawEmployeeCountsPerHalfDay.length; i++) {
-                parsedEmployeeCountsPerHalfDay[i] = Integer.parseInt(rawEmployeeCountsPerHalfDay[i]);
-            }
-            stepDefinitionList.add(parsedEmployeeCountsPerHalfDay);
-        }
-        return stepDefinitionList;
-    }
-
-    private ArrayList<String> getRawStepDefinitions(String filePathname) {
+    public ArrayList<String> getRawStepDefinitions(String filepath) {
         ArrayList<String> rawStepDefinitionList = new ArrayList<>();
         try {
-            File file = new File(filePathname);
+            File file = new File(filepath);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String rawData = scanner.nextLine();
@@ -33,7 +18,7 @@ public class DefinitionReaderFromFile {
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filePathname);
+            System.out.println("File not found: " + filepath);
             e.printStackTrace();
         }
 

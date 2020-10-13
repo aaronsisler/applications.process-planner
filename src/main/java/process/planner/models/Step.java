@@ -6,6 +6,7 @@ public class Step {
     private final ArrayList<HalfDay> halfDays;
     private int stepNumber;
     private int previousStepHalfDays = 1;
+    private int staggerFromStart = 0;
 
     public Step() {
         halfDays = new ArrayList<>();
@@ -13,6 +14,14 @@ public class Step {
 
     public Step(ArrayList<HalfDay> halfDays) {
         this.halfDays = halfDays;
+    }
+
+    public int getStaggerFromStart() {
+        return staggerFromStart;
+    }
+
+    public void setStaggerFromStart(int staggerFromStart) {
+        this.staggerFromStart = staggerFromStart;
     }
 
     public int getPreviousStepHalfDays() {
