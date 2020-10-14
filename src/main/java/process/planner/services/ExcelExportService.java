@@ -19,7 +19,7 @@ public class ExcelExportService {
         createHeaderRows(sheet);
         int rowCounterPostHeaders = 2;
         for (int[] row : processMapping) {
-            if (row[0] == -1) {
+            if (row[0] == -2) {
                 createSeparatorRow(sheet, row.length, rowCounterPostHeaders);
             } else {
                 createValueRow(sheet, row, rowCounterPostHeaders);
@@ -41,15 +41,18 @@ public class ExcelExportService {
         XSSFRow tempRow = sheet.createRow(rowPosition);
 
         for (int i = 0; i < rowData.length; i++) {
-            String cellValue = rowData[i] == 0 ? "" : Integer.toString(rowData[i]);
-            tempRow.createCell(i).setCellValue(cellValue);
+            if (rowData[i] == -1) {
+                tempRow.createCell(i).setCellValue("");
+            } else {
+                tempRow.createCell(i).setCellValue(rowData[i]);
+            }
         }
     }
 
     private static void createSeparatorRow(XSSFSheet sheet, int columnCount, int rowPosition) {
         XSSFRow blankRow = sheet.createRow(rowPosition);
         CellStyle blankRowCellStyle = blankRow.getSheet().getWorkbook().createCellStyle();
-        blankRowCellStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.index);
+        blankRowCellStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
         blankRowCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         for (int i = 0; i < columnCount; i++) {
             XSSFCell tempDayCell = blankRow.createCell(i);
@@ -96,9 +99,6 @@ public class ExcelExportService {
             mergedCellsMonthBegin = columnCounter;
             monthCounter++;
         }
-    }
-
-    private static void createDaysRow() {
     }
 
     private static void createExcelFile(Workbook wb) {

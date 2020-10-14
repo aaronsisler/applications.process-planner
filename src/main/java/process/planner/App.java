@@ -4,6 +4,7 @@ import process.planner.models.Process;
 import process.planner.models.Suite;
 import process.planner.services.DatesService;
 import process.planner.services.DefinitionService;
+import process.planner.services.ExcelExportService;
 import process.planner.services.SchedulerService;
 import process.planner.utils.FolderReader;
 
@@ -38,12 +39,12 @@ public class App {
 
             // Service to read Process and place into an Array
             int[][] suitesSchedule = new SchedulerService().createSuitesSchedule(suiteList);
-            App.printOutProcessMapping(suitesSchedule);
+//            App.printOutProcessMapping(suitesSchedule);
 
-//            int[] employeeCountsPerDay = processEmployeeCounts(suitesSchedule);
+            int[] employeeCountsPerDay = processEmployeeCounts(suitesSchedule);
 
             // Service to take Array and make an Excel sheet
-//            ExcelExportService.exportExcelFile(suitesSchedule, employeeCountsPerDay);
+            ExcelExportService.exportExcelFile(suitesSchedule, employeeCountsPerDay);
         } catch (Exception e) {
             System.out.println("Check above for helpful error messages");
             System.out.println(e.getMessage());

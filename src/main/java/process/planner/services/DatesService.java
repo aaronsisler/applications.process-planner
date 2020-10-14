@@ -53,7 +53,7 @@ public class DatesService {
         String month = rawMonth.length() == 1 ? String.format("0%s", rawMonth) : rawMonth;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
-        String rawDate = String.format("%d/%s/01", month, year);
+        String rawDate = String.format("%d/%s/01", year, month);
         LocalDate date = LocalDate.parse(rawDate, formatter);
 
         return date.lengthOfMonth();
@@ -72,7 +72,7 @@ public class DatesService {
         String month = rawMonth >= 10 ? Integer.toString(rawMonth) : String.format("0%d", rawMonth);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
-        String rawDate = String.format("%d/%s/01", month, 1970);
+        String rawDate = String.format("%d/%s/01", 1970, month);
         LocalDate date = LocalDate.parse(rawDate, formatter);
 
         return date.getMonth().toString();
