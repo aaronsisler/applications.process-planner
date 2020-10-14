@@ -7,6 +7,7 @@ public class Step {
     private int stepNumber;
     private int previousStepHalfDays = 1;
     private int staggerFromStart = 0;
+    private String stepColor = "NONE";
 
     public Step() {
         halfDays = new ArrayList<>();
@@ -56,5 +57,13 @@ public class Step {
         HalfDay halfDay = new HalfDay(numberOfEmployees);
 
         this.halfDays.add(halfDay);
+    }
+
+    public String getStepColor() {
+        return stepColor;
+    }
+
+    public void setStepColor(String stepColor) {
+        this.stepColor = stepColor;
     }
 }

@@ -4,5 +4,6 @@ Used to take in text files that define the process and dates process will be run
 
 ### To Do
 
-1. Announce if there will be a collision of process in a suite.
+1. Take color as a step argument
 1. Take year as an argument
+

@@ -1,28 +1,34 @@
 package process.planner.services;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import process.planner.CellFormat;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class ExcelExportService {
-    public static void exportExcelFile(int[][] processMapping, int[] employeeCountsPerDay) {
+    public static void exportExcelFile(int[][] processMapping, int[] employeeCountsPerDay, String[] stepsColorScheme) {
         XSSFWorkbook wb = new XSSFWorkbook();
 
         // Creating Sheets using sheet object
         XSSFSheet sheet = wb.createSheet("Schedule");
         createHeaderRows(sheet);
         int rowCounterPostHeaders = 2;
-        for (int[] row : processMapping) {
+        for (int i = 0; i < processMapping.length; i++) {
+            int[] row = processMapping[i];
+
             if (row[0] == -2) {
                 createSeparatorRow(sheet, row.length, rowCounterPostHeaders);
             } else {
-                createValueRow(sheet, row, rowCounterPostHeaders);
+                String stepColor = stepsColorScheme[i];
+                createValueRow(sheet, row, stepColor, rowCounterPostHeaders);
             }
 
             rowCounterPostHeaders++;
@@ -37,27 +43,36 @@ public class ExcelExportService {
         createExcelFile(wb);
     }
 
-    private static void createValueRow(XSSFSheet sheet, int[] rowData, int rowPosition) {
+    private static void createValueRow(XSSFSheet sheet, int[] rowData, String stepColor, int rowPosition) {
         XSSFRow tempRow = sheet.createRow(rowPosition);
+        CellStyle cellStyle = createCellStyle(tempRow, stepColor);
 
         for (int i = 0; i < rowData.length; i++) {
             if (rowData[i] == -1) {
                 tempRow.createCell(i).setCellValue("");
             } else {
-                tempRow.createCell(i).setCellValue(rowData[i]);
+                XSSFCell tempCell = tempRow.createCell(i);
+                tempCell.setCellValue(rowData[i]);
+                tempCell.setCellStyle(cellStyle);
             }
         }
     }
 
+    private static CellStyle createCellStyle(XSSFRow row, String cellColor) {
+        CellStyle cellStyle = row.getSheet().getWorkbook().createCellStyle();
+        cellStyle.setFillForegroundColor(CellFormat.getCellColor(cellColor));
+        cellStyle.setFillPattern(CellFormat.getFillPattern());
+
+        return cellStyle;
+    }
+
     private static void createSeparatorRow(XSSFSheet sheet, int columnCount, int rowPosition) {
         XSSFRow blankRow = sheet.createRow(rowPosition);
-        CellStyle blankRowCellStyle = blankRow.getSheet().getWorkbook().createCellStyle();
-        blankRowCellStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
-        blankRowCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
         for (int i = 0; i < columnCount; i++) {
             XSSFCell tempDayCell = blankRow.createCell(i);
             tempDayCell.setCellValue("");
-            tempDayCell.setCellStyle(blankRowCellStyle);
+            tempDayCell.setCellStyle(createCellStyle(blankRow,"GREY"));
         }
     }
 

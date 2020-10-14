@@ -7,6 +7,7 @@ import process.planner.utils.FolderReader;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class App {
@@ -57,8 +58,11 @@ public class App {
 
             int[] employeeCountsPerDay = processEmployeeCounts(suitesSchedule);
 
+            String[] stepsColorScheme = new String[suitesSchedule.length];
+            Arrays.fill(stepsColorScheme, "CORAL");
+
             // Service to take Array and make an Excel sheet
-            ExcelExportService.exportExcelFile(suitesSchedule, employeeCountsPerDay);
+            ExcelExportService.exportExcelFile(suitesSchedule, employeeCountsPerDay, stepsColorScheme);
         } catch (Exception e) {
             System.out.println("Check above for helpful error messages");
             System.out.println(e.getMessage());

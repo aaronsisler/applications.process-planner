@@ -16,8 +16,10 @@ public class DefinitionService {
             String[] rawStepSections = rawStep.split("~");
             int stepStagger = Integer.parseInt(rawStepSections[0]);
             int[] halfDayCounts = Arrays.stream(rawStepSections[1].split(",")).mapToInt(Integer::parseInt).toArray();
+            String stepColor = rawStepSections[2];
             Step tempStep = new Step();
             tempStep.setStaggerFromStart(stepStagger);
+            tempStep.setStepColor(stepColor);
             for (int employeeCount : halfDayCounts) {
                 tempStep.addHalfDay(employeeCount);
             }
