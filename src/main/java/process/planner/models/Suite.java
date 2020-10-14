@@ -6,6 +6,15 @@ import java.util.ArrayList;
 public class Suite {
     private ArrayList<LocalDate> processDates = new ArrayList<>();
     private Process process;
+    private int suiteNumber;
+
+    public int getSuiteNumber() {
+        return suiteNumber;
+    }
+
+    public void setSuiteNumber(int suiteNumber) {
+        this.suiteNumber = suiteNumber;
+    }
 
     public ArrayList<LocalDate> getProcessDates() {
         return processDates;

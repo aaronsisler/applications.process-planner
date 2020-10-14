@@ -2,10 +2,7 @@ package process.planner;
 
 import process.planner.models.Process;
 import process.planner.models.Suite;
-import process.planner.services.DatesService;
-import process.planner.services.DefinitionService;
-import process.planner.services.ExcelExportService;
-import process.planner.services.SchedulerService;
+import process.planner.services.*;
 import process.planner.utils.FolderReader;
 
 import java.time.LocalDate;
@@ -21,6 +18,13 @@ public class App {
 
             ArrayList<String> filepathProcessDateList = FolderReader.retrieveDateFiles();
 
+            if(filepathProcessDefinitionList.size() != filepathProcessDateList.size()) {
+                System.out.println("Definition file count and date file count does not equal.");
+                System.out.println(String.format("Definition file count: ", filepathProcessDefinitionList.size()));
+                System.out.println(String.format("Date file count: ", filepathProcessDateList.size()));
+                throw new Exception("File count validation error");
+            }
+
             // Service that reads input of processes
             ArrayList<Suite> suiteList = new ArrayList<>();
             for (String filepath : filepathProcessDefinitionList) {
@@ -34,7 +38,17 @@ public class App {
                 String filepath = filepathProcessDateList.get(i);
                 ArrayList<LocalDate> processDateList = DatesService.getProcessDateList(filepath);
                 Suite tempSuite = suiteList.get(i);
+                tempSuite.setSuiteNumber(i+1);
                 tempSuite.setProcessDates(processDateList);
+            }
+
+            // Run validation on input dates
+            ArrayList<String> dateClashList = ValidationService.validateDates(suiteList);
+            if (dateClashList.size() > 0) {
+                for (String dateClash : dateClashList) {
+                    System.out.println(dateClash);
+                }
+                throw new Exception("Date Validation failed. See above");
             }
 
             // Service to read Process and place into an Array
