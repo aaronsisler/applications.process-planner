@@ -22,7 +22,7 @@ public class ValidationService {
                 LocalDate firstDate = suiteDatesList.get(j - 1);
                 LocalDate secondDate = suiteDatesList.get(j);
                 int daysBetweenDates = (int) (secondDate.toEpochDay() - firstDate.toEpochDay());
-                if (daysBetweenDates <= config.PROCESS_DAY_STAGGER) {
+                if (daysBetweenDates < config.PROCESS_DAY_STAGGER) {
                     dateClashes.add(String.format("Suite: %d --- Date: %s is to close to Date: %s", suite.getSuiteNumber(), firstDate.toString(), secondDate.toString()));
                 }
             }

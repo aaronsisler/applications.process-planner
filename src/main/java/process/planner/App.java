@@ -7,7 +7,6 @@ import process.planner.utils.FolderReader;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class App {
@@ -59,7 +58,20 @@ public class App {
             int[] employeeCountsPerDay = processEmployeeCounts(suitesSchedule);
 
             String[] stepsColorScheme = new String[suitesSchedule.length];
-            Arrays.fill(stepsColorScheme, "CORAL");
+            Config config = new Config();
+            int suiteCounter = 0;
+            int suiteStepCounter = 0;
+            for (int i = 0; i < suitesSchedule.length; i++) {
+                if(suitesSchedule[i][0] == config.FILLED_CELL) {
+                    stepsColorScheme[i] = "GREY";
+                    suiteCounter++;
+                    suiteStepCounter = 0;
+                } else {
+                    stepsColorScheme[i] = suiteList.get(suiteCounter).getProcess().getSteps().get(suiteStepCounter).getStepColor();
+                    suiteStepCounter++;
+                }
+            }
+//            Arrays.fill(stepsColorScheme, CellFormat.getCellColor("CORAL"));
 
             // Service to take Array and make an Excel sheet
             ExcelExportService.exportExcelFile(suitesSchedule, employeeCountsPerDay, stepsColorScheme);
