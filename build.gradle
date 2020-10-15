@@ -14,7 +14,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
-compileJava   {
+compileJava {
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
 }
@@ -54,3 +54,23 @@ shadowJar {
     archiveClassifier.set('')
     archiveVersion.set('')
 }
+
+task cleanPackageSpace(type: Delete) {
+    delete files("/Users/aaronsisler/MyStuff/ProcessPlanner")
+}
+
+task packageIntoZip(type: Zip) {
+    archiveFileName = "process-planner.zip"
+    destinationDirectory = file("/Users/aaronsisler/MyStuff/ProcessPlanner")
+
+    from(".") {
+        include "process-files/*"
+    }
+    from("build/libs") {
+        include "shadow.jar"
+    }
+}
+
+cleanPackageSpace.dependsOn(clean)
+shadowJar.dependsOn(cleanPackageSpace)
+packageIntoZip.dependsOn(shadowJar)
