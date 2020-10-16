@@ -7,3 +7,5 @@ Used to take in text files that define the process and dates process will be run
 1. Take color as a step argument
 1. Take year as an argument
 
+### Build
+gradle clean cleanPackageSpace shadowJar packageIntoZip

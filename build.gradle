@@ -71,6 +71,3 @@ task packageIntoZip(type: Zip) {
     }
 }
 
-cleanPackageSpace.dependsOn(clean)
-shadowJar.dependsOn(cleanPackageSpace)
-packageIntoZip.dependsOn(shadowJar)
