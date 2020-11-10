@@ -12,9 +12,11 @@ public class DefinitionReaderFromFile {
             File file = new File(filepath);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                String rawData = scanner.nextLine();
-                String rawStep = rawData.split("#")[0].trim();
-                rawStepDefinitionList.add(rawStep);
+                String rawData = scanner.nextLine().trim();
+                if (!rawData.isEmpty()) {
+                    String rawStep = rawData.split("#")[0].trim();
+                    rawStepDefinitionList.add(rawStep);
+                }
             }
             scanner.close();
         } catch (FileNotFoundException e) {

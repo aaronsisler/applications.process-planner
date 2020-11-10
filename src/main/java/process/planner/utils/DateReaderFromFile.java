@@ -12,8 +12,10 @@ public class DateReaderFromFile {
             File file = new File(filePathname);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                String rawDate = scanner.nextLine();
-                dateList.add(rawDate);
+                String rawDate = scanner.nextLine().trim();
+                if (!rawDate.isEmpty()) {
+                    dateList.add(rawDate);
+                }
             }
             scanner.close();
         } catch (FileNotFoundException e) {
