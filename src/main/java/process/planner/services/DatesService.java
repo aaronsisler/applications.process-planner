@@ -2,21 +2,23 @@ package process.planner.services;
 
 import process.planner.utils.DateReaderFromFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 
 public class DatesService {
 
-    public static ArrayList<LocalDate> getProcessDateList(String filepath) {
+    public static ArrayList<LocalDate> getProcessDateList(String filepath) throws IOException {
         ArrayList<LocalDate> dateList = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
 
-        ArrayList<String> rawDateList = new DateReaderFromFile().getDates(filepath);
+        Map<String, String> rawDateList = new DateReaderFromFile().getDates(filepath);
 
-        for (String rawDate : rawDateList) {
+        for (String rawDate : rawDateList.keySet()) {
             try {
                 LocalDate date = LocalDate.parse(rawDate, formatter);
                 dateList.add(date);
